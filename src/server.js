@@ -70,8 +70,5 @@ export function setupServer() {
       error: err.message,
     });
   });
-
-  app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
-  });
-}
+console.log(`Server is running on ${PORT}`);
+  })}
