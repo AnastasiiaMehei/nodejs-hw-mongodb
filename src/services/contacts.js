@@ -20,6 +20,11 @@ export const deleteContact = async (contactId) => {
 
   return contact;
 };
+export const patchContact = async (id, contactData) => {
+  return await contactsCollection.findByIdAndUpdate(id, contactData, {
+    new: true,
+  });
+};
 export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await contactsCollection.findOneAndUpdate(
     { _id: contactId },
