@@ -18,7 +18,7 @@ const router = Router();
 router.get('/contacts', ctrlWrapper(getContactsController));
 router.get(
   '/contacts/:contactId',
-  isValidId,
+  // isValidId,
   ctrlWrapper(getContactByIdController),
 );
 router.post(
@@ -32,5 +32,9 @@ router.patch(
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
-router.put('/contacts/:contactId', ctrlWrapper(upsertContactController));
+router.put(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(upsertContactController),
+);
 export default router;
