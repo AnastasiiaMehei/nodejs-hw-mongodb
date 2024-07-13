@@ -7,26 +7,51 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
-import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+// export const getContactsController = async (req, res, next) => {
+//   try {
+//     const { page, perPage } = parsePaginationParams(req.query);
+//     const contacts = await getAllContacts({ page, perPage });
+//     const paginationData = calculatePaginationData(
+//       contacts.length,
+//       perPage,
+//       parseInt(page),
+//     );
+//     res;
+//     // const responseData = {
+//     //   status: 200,
+//     //   message: 'Successfully found contacts!',
+//     //   data: {
+//     //     data: contacts,
+//     //     ...paginationData,
+//     //   },
+//     // };
+//     // res.json(responseData);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 export const getContactsController = async (req, res, next) => {
   try {
     const { page, perPage } = parsePaginationParams(req.query);
-    const contacts = await getAllContacts({ page, perPage });
-    const paginationData = calculatePaginationData(
-      contacts.length,
+    const contacts = await getAllContacts({
+      page,
       perPage,
-      parseInt(page),
-    );
+    });
+    const paginationData = contacts.pagination;
 
-    const responseData = {
+    res.json({
       status: 200,
-      message: 'Successfully found contacts!',
+      message: 'Successfully found Nastya!',
       data: {
-        data: contacts,
-        ...paginationData,
+        data: contacts.data,
+        page: paginationData.page,
+        perPage: paginationData.perPage,
+        totalItems: paginationData.totalItems,
+        totalPages: paginationData.totalPages,
+        hasPreviousPage: paginationData.hasPreviousPage,
+        hasNextPage: paginationData.hasNextPage,
       },
-    };
-    res.json(responseData);
+    });
   } catch (err) {
     next(err);
   }
