@@ -1,9 +1,9 @@
 import {
-  getAllContacts,
   getContactById,
   createContact,
   deleteContact,
   updateContact,
+  getAllContacts,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
