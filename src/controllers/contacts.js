@@ -15,7 +15,7 @@ export const getContactsController = async (req, res, next) => {
       page,
       perPage,
     });
-    // const paginationData = contacts.pagination;
+    const paginationData = contacts.pagination;
 
     res.json({
       status: 200,
