@@ -16,16 +16,16 @@ export const createContactSchema = Joi.object({
     .valid('work', 'home', 'personal')
     .required(),
 });
-const userData = {
-  name: 'John Doe',
-  phoneNumber: 1234567890,
-  email: 'john.doe@example.com',
-  isFavourite: true,
-  contactType: 'personal',
-};
-const validationResult = createContactSchema.validate(userData, {
-  abortEarly: false,
-});
+// const userData = {
+//   name: 'John Doe',
+//   phoneNumber: 1234567890,
+//   email: 'john.doe@example.com',
+//   isFavourite: true,
+//   contactType: 'personal',
+// };
+// const validationResult = createContactSchema.validate(userData, {
+//   abortEarly: false,
+// });
 export const updateContactSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.number().integer().min(6).max(16),
