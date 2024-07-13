@@ -11,14 +11,24 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 export const getContactsController = async (req, res, next) => {
   try {
     const { page, perPage } = parsePaginationParams(req.query);
-    const contacts = await getAllContacts({
-      page,
-      perPage,
-    });
+    const contactsResult = await getAllContacts({ page, perPage });
+
+    // Extracting pagination data from the result
+    const paginationData = contactsResult.pagination;
+
+    // Formatting the response to include pagination details within the 'data' property
     res.json({
       status: 200,
       message: 'Successfully found contacts!',
-      data: contacts,
+      data: {
+        data: contactsResult.data, // Directly using the contacts data from the result
+        page: paginationData.page,
+        perPage: paginationData.perPage,
+        totalItems: paginationData.totalItems,
+        totalPages: paginationData.totalPages,
+        hasPreviousPage: paginationData.hasPreviousPage,
+        hasNextPage: paginationData.hasNextPage,
+      },
     });
   } catch (err) {
     next(err);
