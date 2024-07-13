@@ -26,11 +26,19 @@ router.post(
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
+router.delete(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(deleteContactController),
+);
 router.patch(
   '/contacts/:contactId',
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
-router.put('/contacts/:contactId', ctrlWrapper(upsertContactController));
+router.put(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(upsertContactController),
+);
 export default router;
