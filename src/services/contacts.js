@@ -1,6 +1,6 @@
 import { contactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-export const getAllStudents = async ({ page, perPage }) => {
+export const getAllContacts = async ({ page, perPage }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
@@ -53,7 +53,7 @@ export const updateContact = async (contactId, payload, options = {}) => {
   if (!rawResult || !rawResult.value) return null;
 
   return {
-    student: rawResult.value,
+    contact: rawResult.value,
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
