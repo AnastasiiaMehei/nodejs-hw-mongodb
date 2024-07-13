@@ -26,7 +26,6 @@ const userData = {
 const validationResult = createContactSchema.validate(userData, {
   abortEarly: false,
 });
-console.log(validationResult);
 export const updateContactSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.number().integer().min(6).max(16),
