@@ -8,7 +8,6 @@ import {
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-
 export const getContactsController = async (req, res, next) => {
   try {
     const { page, perPage } = parsePaginationParams(req.query);
@@ -23,15 +22,10 @@ export const getContactsController = async (req, res, next) => {
       status: 200,
       message: 'Successfully found contacts!',
       data: {
-        page: parseInt(page),
-        perPage: perPage,
-        totalItems: contacts.length,
-        totalPages: paginationData.totalPages,
-        hasPreviousPage: paginationData.hasPreviousPage,
-        hasNextPage: paginationData.hasNextPage,
+        data: contacts,
+        ...paginationData,
       },
     };
-
     res.json(responseData);
   } catch (err) {
     next(err);
