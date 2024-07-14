@@ -8,8 +8,15 @@ const parseContactType = (type) => {
 const parseIsFavourite = (isFavourite) => {
   const isBoolean = typeof isFavourite === 'boolean';
   if (!isBoolean) return;
-  return isFavourite;
+  const isFavouriteType = (isFavourite) => [true, false].includes(isFavourite);
+
+  if (isFavouriteType(isFavourite)) return isFavourite;
 };
+// const parseIsFavourite = (isFavourite) => {
+//   const isBoolean = typeof isFavourite === 'boolean';
+//   if (!isBoolean) return;
+//   return isFavourite;
+// };
 export const parseFilterParams = (query) => {
   const { type, isFavourite } = query;
 
