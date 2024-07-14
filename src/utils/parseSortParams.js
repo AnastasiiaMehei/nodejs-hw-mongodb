@@ -10,12 +10,12 @@ const parseSortBy = (sortBy) => {
   const keysOfContact = [
     '_id',
     'name',
-    'age',
-    'gender',
-    'avgMark',
-    'onDuty',
-    'createdAt',
-    'updatedAt',
+    // 'phoneNumber',
+    // 'email',
+    // 'isFavourite',
+    // 'contactType',
+    // 'createdAt',
+    // 'updatedAt',
   ];
 
   if (keysOfContact.includes(sortBy)) {
