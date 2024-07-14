@@ -5,6 +5,7 @@ const parseContactType = (type) => {
 
   if (isContactType(type)) return type;
 };
+
 const parseIsFavourite = (isFavourite) => {
   const isBoolean = typeof isFavourite === 'boolean';
   if (!isBoolean) return;
