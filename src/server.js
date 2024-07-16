@@ -25,6 +25,7 @@ export function setupServer() {
       },
     }),
   );
+
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello world!',
@@ -34,9 +35,7 @@ export function setupServer() {
   app.use(contactsRouter);
 
   app.use('*', notFoundHandler);
-
   app.use(errorHandler);
-
   app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
   });
