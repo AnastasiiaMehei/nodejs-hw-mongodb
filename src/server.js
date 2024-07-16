@@ -31,9 +31,7 @@ export function setupServer() {
       message: 'Hello world!',
     });
   });
-
   app.use(contactsRouter);
-
   app.use('*', notFoundHandler);
   app.use(errorHandler);
   app.listen(PORT, () => {
