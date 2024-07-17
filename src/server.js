@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import contactsRouter from './routes/contacts.js';
+// import contactsRouter from './routes/contacts.js';
+import router from './routers/index.js';
+import cookieParser from 'cookie-parser';
+
 dotenv.config();
 const PORT = env('PORT', '8080');
 
@@ -25,13 +28,15 @@ export function setupServer() {
       },
     }),
   );
-
+  app.use(cookieParser());
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello world!',
     });
   });
-  app.use(contactsRouter);
+  // app.use(contactsRouter);
+  app.use(router);
+
   app.use('*', notFoundHandler);
   app.use(errorHandler);
   app.listen(PORT, () => {
