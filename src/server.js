@@ -5,8 +5,7 @@ import dotenv from 'dotenv';
 import { env } from './utils/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-// import contactsRouter from './routes/contacts.js';
-import router from './routers/index.js';
+import router from './routes/index.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
