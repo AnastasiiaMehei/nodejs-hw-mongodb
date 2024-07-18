@@ -1,3 +1,4 @@
+// src/controllers/contacts.js
 import { isValidObjectId } from 'mongoose';
 import {
   getContactById,
@@ -13,15 +14,17 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
-  const userId = req.user._id; // Get user ID from authenticated user
+  const userId = req.user._id;
 
   const contacts = await getAllContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
-    userId, // Фильтр по ID
+    userId,
   });
+
+  console.log('getContactsController - contacts:', contacts);
 
   res.json({
     status: 200,
@@ -31,32 +34,45 @@ export const getContactsController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
-  const { contactId } = req.params;
-  const userId = req.user._id; // ID авторизированного пользователя
+  try {
+    const { contactId } = req.params;
+    const userId = req.user._id;
 
-  if (!isValidObjectId(contactId)) {
-    return next(createHttpError(400, 'Invalid contact ID'));
+    if (!isValidObjectId(contactId)) {
+      console.error('Invalid contact ID:', contactId);
+      return next(createHttpError(400, 'Invalid contact ID'));
+    }
+
+    const contact = await getContactById(contactId);
+    if (!contact) {
+      console.error('Contact not found:', contactId);
+      return next(createHttpError(404, 'Contact not found'));
+    }
+
+    if (!contact.userId) {
+      console.error('Contact does not have a userId:', contact);
+      return next(createHttpError(500, 'Contact does not have a userId'));
+    }
+
+    if (contact.userId.toString() !== userId.toString()) {
+      console.error('Forbidden access to contact:', contactId);
+      return next(createHttpError(403, 'Forbidden'));
+    }
+
+    res.json({
+      status: 200,
+      message: `Successfully found contact with id ${contactId}!`,
+      data: contact,
+    });
+  } catch (error) {
+    console.error('Error in getContactByIdController:', error);
+    next(error); // Pass the error to the error handler middleware
   }
-
-  const contact = await getContactById(contactId);
-  if (!contact) {
-    return next(createHttpError(404, 'Contact not found'));
-  }
-
-  if (contact.userId.toString() !== userId.toString()) {
-    return next(createHttpError(403, 'Forbidden'));
-  }
-
-  res.json({
-    status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
-    data: contact,
-  });
 };
 
 export const createContactController = async (req, res) => {
-  const userId = req.user._id; // ID авторизированного пользователя
-  const contactData = { ...req.body, userId }; // Связать контакт с ID
+  const userId = req.user._id;
+  const contactData = { ...req.body, userId };
 
   const contact = await createContact(contactData);
   res.status(201).json({
@@ -68,7 +84,7 @@ export const createContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id; // ID авторизированного пользователя
+  const userId = req.user._id;
 
   if (!isValidObjectId(contactId)) {
     return next(createHttpError(400, 'Invalid contact ID'));
@@ -89,7 +105,7 @@ export const deleteContactController = async (req, res, next) => {
 
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id; // ID авторизированного пользователя
+  const userId = req.user._id;
 
   if (!isValidObjectId(contactId)) {
     return next(createHttpError(400, 'Invalid contact ID'));
@@ -114,7 +130,7 @@ export const patchContactController = async (req, res, next) => {
 
 export const upsertContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id; // ID авторизированного пользователя
+  const userId = req.user._id;
 
   if (!isValidObjectId(contactId)) {
     return next(createHttpError(400, 'Invalid contact ID'));

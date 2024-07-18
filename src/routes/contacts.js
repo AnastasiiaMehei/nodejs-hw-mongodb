@@ -1,3 +1,4 @@
+// src/routes/contacts.js
 import { Router } from 'express';
 import {
   getContactsController,
@@ -17,7 +18,7 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 
-router.use(authenticate); // Применяем authenticate middleware ко всем рутам
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(getContactsController));
 router.get('/:contactId', ctrlWrapper(getContactByIdController));

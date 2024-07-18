@@ -1,4 +1,3 @@
-// src/services/contacts.js
 import { contactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
@@ -12,12 +11,14 @@ export const getAllContacts = async ({
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
-  const contactsQuery = contactsCollection.find({ userId }); // Фильтр по userId
+  const contactsQuery = contactsCollection.find({ userId });
 
   const contactsCount = await contactsCollection
-    .find({ userId }) // Фильтр по userId
+    .find({ userId })
     .merge(contactsQuery)
     .countDocuments();
+
+  console.log('getAllContacts - contactsCount:', contactsCount);
 
   const contacts = await contactsQuery
     .skip(skip)
@@ -33,8 +34,16 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (contactId) => {
-  const contact = await contactsCollection.findById(contactId);
-  return contact;
+  try {
+    const contact = await contactsCollection.findById(contactId);
+    if (!contact) {
+      console.error('getContactById - Contact not found:', contactId);
+    }
+    return contact;
+  } catch (error) {
+    console.error('Error in getContactById:', error);
+    throw error;
+  }
 };
 
 export const createContact = async (payload) => {
