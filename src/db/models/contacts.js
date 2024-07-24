@@ -28,9 +28,11 @@ const contactSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    photo: { type: String },
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
