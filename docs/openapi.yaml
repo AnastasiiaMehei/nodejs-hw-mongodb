@@ -11,8 +11,8 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://localhost:8080
   - url: https://nodejs-hw-mongodb-2-wxns.onrender.com
+  - url: http://localhost:8080
 paths:
   /auth/register:
     post:
