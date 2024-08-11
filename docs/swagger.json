@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://nodejs-hw-mongodb-2-wxns.onrender.com"
+      "url": "https://nodejs-hw-7-mongodb.onrender.com"
     },
     {
       "url": "http://localhost:8080"
