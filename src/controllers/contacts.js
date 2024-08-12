@@ -68,7 +68,7 @@ export const getContactByIdController = async (req, res, next) => {
     });
   } catch (error) {
     console.error('Error in getContactByIdController:', error);
-    next(error); // Pass the error to the error handler middleware
+    next(error);
   }
 };
 
